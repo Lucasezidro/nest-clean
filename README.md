@@ -32,3 +32,11 @@ than i run migrations with the command
 - already in this step i hashed password using
   - npm i bcrypsjs
   - npm i @types/bcryptjs
+
+## Errors validation
+
+- I create validations and schemas, also types using z.infer for can make the body parse of informations
+- i create zod-validation-pipe file following nest documentation
+- libs used:
+  - npm i zod
+  - npm i zod-validation-error
