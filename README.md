@@ -15,10 +15,8 @@ nest new project-name
 ## Create user and questions models
 
 - The relationship of fields indicates that many users can make many questions
-
-than i run migrations with the command
-
-- npx prisma migrate dev
+- than i run migrations with the command
+  - npx prisma migrate dev
 
 ## Connect with database
 
@@ -44,3 +42,8 @@ than i run migrations with the command
 ## Config Rest client
 
 - Rest client is a extension of vs code and i config a file in root project with http extension for test my requests
+
+## Create validation with zod and nest/config
+
+- for this config i use zod, that is already intalled and add a nest config package for manipulation
+  - npm i nestjs/config
