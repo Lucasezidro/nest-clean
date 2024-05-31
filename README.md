@@ -29,3 +29,6 @@ than i run migrations with the command
 
 - in this step i create the create createAccountController, and save the created user in database
 - is important check the changes in tsconfig because this changes avoid futures errors
+- already in this step i hashed password using
+  - npm i bcrypsjs
+  - npm i @types/bcryptjs
