@@ -40,3 +40,7 @@ than i run migrations with the command
 - libs used:
   - npm i zod
   - npm i zod-validation-error
+
+## Config Rest client
+
+- Rest client is a extension of vs code and i config a file in root project with http extension for test my requests
