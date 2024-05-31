@@ -24,3 +24,5 @@ than i run migrations with the command
 
 - now i config my first service, the prisma service to connect with database
 - i use the OnModuleInit and OnModuleDestroy to have control about the futures problems that happens
+
+## Create account controller
