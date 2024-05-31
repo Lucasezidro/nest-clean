@@ -26,3 +26,6 @@ than i run migrations with the command
 - i use the OnModuleInit and OnModuleDestroy to have control about the futures problems that happens
 
 ## Create account controller
+
+- in this step i create the create createAccountController, and save the created user in database
+- is important check the changes in tsconfig because this changes avoid futures errors
