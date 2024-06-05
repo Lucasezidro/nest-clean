@@ -26,13 +26,13 @@ describe('Authenticate (E2E)', () => {
       data: {
         name: 'John Doe',
         email: 'johndoe@exemple.com',
-        password: '123456',
+        password: await hash('123456', 8),
       }
     })
 
     const response = await request(app.getHttpServer()).post('/sessions').send({
       email: 'johndoe@exemple.com',
-      password: await hash('123456', 8),
+      password: '123456',
     })
 
     expect(response.statusCode).toBe(201)
