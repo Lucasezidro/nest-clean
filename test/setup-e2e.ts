@@ -5,7 +5,6 @@ import 'dotenv/config'
 
 const prisma = new PrismaClient()
 
-
 function generateUniqueDatabaseURL(schemaId: string) {
   if (!process.env.DATABASE_URL) {
     throw new Error('Please provider a DATABASE_URL environment variables.')

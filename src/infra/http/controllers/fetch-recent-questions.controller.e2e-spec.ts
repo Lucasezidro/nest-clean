@@ -1,7 +1,7 @@
-import { AppModule } from "@/infra/app.module"
-import { PrismaService } from "@/infra/prisma/prisma.service"
-import { INestApplication } from "@nestjs/common"
-import { JwtService } from "@nestjs/jwt"
+import { AppModule } from '@/infra/app.module'
+import { PrismaService } from '@/infra/prisma/prisma.service'
+import { INestApplication } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 
@@ -12,7 +12,7 @@ describe('Fetch recent questions (E2E)', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule]
+      imports: [AppModule],
     }).compile()
 
     app = moduleRef.createNestApplication()
@@ -30,7 +30,7 @@ describe('Fetch recent questions (E2E)', () => {
         name: 'John Doe',
         email: 'johndoe@exemple.com',
         password: '123456',
-      }
+      },
     })
 
     const accessToken = jwt.sign({ sub: user.id })
@@ -49,19 +49,19 @@ describe('Fetch recent questions (E2E)', () => {
           content: 'Question content',
           authorId: user.id,
         },
-      ]
+      ],
     })
     const response = await request(app.getHttpServer())
-    .get('/questions')
-    .set('Authorization', `Bearer ${accessToken}`)
-    .send()
+      .get('/questions')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send()
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual({
       questions: [
         expect.objectContaining({ title: 'Question 1' }),
-        expect.objectContaining({ title: 'Question 2' })
-      ]
+        expect.objectContaining({ title: 'Question 2' }),
+      ],
     })
   })
 })
