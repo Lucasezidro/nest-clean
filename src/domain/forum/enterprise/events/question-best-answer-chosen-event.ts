@@ -5,9 +5,9 @@ import { Question } from '../entities/question'
 export class QuestionBestAnswerChosenEvent implements DomainEvent {
   public ocurredAt: Date
   public question: Question
-  public bestAnswerId: UniqueEntityId
+  public bestAnswerId: UniqueEntityId | null
 
-  constructor(question: Question, bestAnswerId: UniqueEntityId) {
+  constructor(question: Question, bestAnswerId: UniqueEntityId | null) {
     this.question = question
     this.bestAnswerId = bestAnswerId
     this.ocurredAt = new Date()

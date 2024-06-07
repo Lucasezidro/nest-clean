@@ -22,7 +22,7 @@ export class PrismaQuestionCommentsRepository
     throw new Error('Method not implemented.')
   }
 
-  create(question: QuestionComment) {
+  create(question: QuestionComment): Promise<void> {
     throw new Error('Method not implemented.')
   }
 }
