@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma.service'
 import { PrismaAnswerAttachmentMapper } from '../mappers/prisma-answer-attachment-mapper'
 
 @Injectable()
-export class PrismaAnswerAttatchemtnsRepository
+export class PrismaAnswerAttachmentsRepository
   implements AnswerAttachmentRepository
 {
   constructor(private prisma: PrismaService) {}
@@ -18,6 +18,34 @@ export class PrismaAnswerAttatchemtnsRepository
     })
 
     return answersAttachments.map(PrismaAnswerAttachmentMapper.toDomain)
+  }
+
+  async createMany(attachments: AnswerAttachment[]): Promise<void> {
+    if (attachments.length === 0) {
+      return
+    }
+
+    const data = PrismaAnswerAttachmentMapper.toPrismaUpdateMany(attachments)
+
+    await this.prisma.attatchments.updateMany(data)
+  }
+
+  async deleteMany(attachments: AnswerAttachment[]): Promise<void> {
+    if (attachments.length === 0) {
+      return
+    }
+
+    const attachmentIds = attachments.map((attachment) => {
+      return attachment.id.toString()
+    })
+
+    await this.prisma.attatchments.deleteMany({
+      where: {
+        id: {
+          in: attachmentIds,
+        },
+      },
+    })
   }
 
   async deleteManyByAnswerId(answerId: string): Promise<void> {
