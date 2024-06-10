@@ -61,6 +61,50 @@ describe('Edit Question', () => {
     ).toHaveLength(2)
   })
 
+  it('should sync nre and removed attachments when editing a question', async () => {
+    const newQuestion = makeQuestion(
+      {
+        authorId: new UniqueEntityId('author-1'),
+      },
+      new UniqueEntityId('question-1'),
+    )
+
+    await inMemoryQuestionRepository.create(newQuestion)
+
+    inMemoryQuestionsAttachmentsRepository.items.push(
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityId('1'),
+      }),
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityId('2'),
+      }),
+    )
+
+    const result = await sut.execute({
+      authorId: 'author-1',
+      title: 'Pergunta teste',
+      content: 'Conteudo teste',
+      questionId: newQuestion.id.toValue(),
+      attachmentsIds: ['1', '3'],
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryQuestionsAttachmentsRepository.items).toHaveLength(2)
+
+    expect(inMemoryQuestionsAttachmentsRepository.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          attachmentId: new UniqueEntityId('1'),
+        }),
+        expect.objectContaining({
+          attachmentId: new UniqueEntityId('3'),
+        }),
+      ]),
+    )
+  })
+
   it('should be not able to edit a question from another user', async () => {
     const newQuestion = makeQuestion(
       {
