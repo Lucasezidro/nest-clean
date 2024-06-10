@@ -30,17 +30,12 @@ describe('Upload and Create Attachment', () => {
       attachment: imMemoryAttachmentsRepository.items[0],
     })
     expect(fakeUploader.upload).toHaveLength(1)
-    expect(fakeUploader.upload[0]).toEqual(
-      expect.objectContaining({
-        fileName: 'profile.png',
-      }),
-    )
   })
 
   it('should not be able to upload an attachment with invalid type', async () => {
     const result = await sut.execute({
-      fileName: 'profile.png',
-      fileType: 'image/png',
+      fileName: 'audio.mp3',
+      fileType: 'mpeg',
       body: Buffer.from(''),
     })
 

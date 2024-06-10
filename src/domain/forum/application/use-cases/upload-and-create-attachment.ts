@@ -30,7 +30,9 @@ export class UploadAndCreateAttachmentUseCase {
     fileType,
     body,
   }: UploadAndCreateAttachmentUseCaseRequest): Promise<UploadAndCreateAttachmentUseCaseResponse> {
-    if (!/^(image\(jpeg|png))$|^application\/pdf$/.test(fileType)) {
+    const validFileRegex = /^image\/(jpeg|png|jpg)$|^application\/pdf$/
+
+    if (!validFileRegex.test(fileType)) {
       return left(new InvalidAttachmentFileError(fileType))
     }
 
