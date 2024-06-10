@@ -1,0 +1,52 @@
+import { Either, left, right } from '@/core/either'
+import { Injectable } from '@nestjs/common'
+import { Attachment } from '../../enterprise/entities/attachment'
+import { InvalidAttachmentFileError } from './errors/invalid-attachment-file-error'
+import { AttachmentsRepository } from '../repositories/attachments-repository'
+import { Uploader } from '../storage/uploader'
+
+interface UploadAndCreateAttachmentCaseRequest {
+  fileName: string
+  fileType: string
+  body: Buffer
+}
+
+type UploadAndCreateAttachmentCaseResponse = Either<
+  InvalidAttachmentFileError,
+  {
+    attachment: Attachment
+  }
+>
+
+@Injectable()
+export class UploadAndCreateAttachmentCase {
+  constructor(
+    private attachmentsRepository: AttachmentsRepository,
+    private uploader: Uploader,
+  ) {}
+
+  async execute({
+    fileName,
+    fileType,
+    body,
+  }: UploadAndCreateAttachmentCaseRequest): Promise<UploadAndCreateAttachmentCaseResponse> {
+    if (!/^(image\(jpeg|png))$|^application\/pdf$/.test(fileType)) {
+      return left(new InvalidAttachmentFileError(fileType))
+    }
+
+    const { url } = await this.uploader.upload({
+      fileName,
+      fileType,
+      body,
+    })
+
+    const attachment = Attachment.create({
+      title: fileName,
+      url,
+    })
+
+    await this.attachmentsRepository.create(attachment)
+
+    return right({ attachment })
+  }
+}
