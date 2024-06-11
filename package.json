@@ -31,6 +31,7 @@
     "@prisma/client": "^5.14.0",
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.11",
+    "ioredis": "^5.4.1",
     "json-stringify-safe": "^5.0.1",
     "passport-jwt": "^4.0.1",
     "path-to-regexp": "^6.2.2",
